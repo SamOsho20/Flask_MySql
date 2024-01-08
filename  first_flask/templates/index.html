@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Flask</title>
+</head>
+<body>
+    <h1>These Are my Friends </h1>
+        <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last name</th>
+                <th>occupation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for one_friend in all_friends  %}
+                <tr>
+                    <td>{{one_friend.first_name}}</td>
+                    <td>{{one_friend.last_name}}</td>
+                    <td>{{one_friend.occupation}}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</body>
+</html>
