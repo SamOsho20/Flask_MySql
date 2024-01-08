@@ -6,10 +6,22 @@
     <title>First Flask</title>
 </head>
 <body>
-    <h1>These Are my Friends </h1>
+
+    <h1>Add a Friend</h1>
+    <form action="/create_friend" method="POST">
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name">
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name">
+        <label for="occupation" >Occupation:</label>
+        <input type="text" name="occupation">
+        <input type="submit" value="Add Friend">
+    </form> 
+    <h2>These Are my Friends </h2>
         <table>
         <thead>
             <tr>
+                <th>Id</th>
                 <th>First Name</th>
                 <th>Last name</th>
                 <th>occupation</th>
@@ -18,6 +30,7 @@
         <tbody>
             {% for one_friend in all_friends  %}
                 <tr>
+                    <td>{{one_friend.id}}</td>
                     <td>{{one_friend.first_name}}</td>
                     <td>{{one_friend.last_name}}</td>
                     <td>{{one_friend.occupation}}</td>
@@ -25,5 +38,7 @@
             {%endfor%}
         </tbody>
     </table>
+
+
 </body>
 </html>
