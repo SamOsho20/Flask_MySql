@@ -7,7 +7,6 @@
 </head>
 <body>
     <H1>user {{this_user.id}}</H1>
-    <button>Home</button>
     <!-- #our buttons will always redirect us to whatever 
     the pages redirect route is in the server.py -->
     <table>
@@ -28,6 +27,7 @@
             </tr>
         </table>
         <a href="update_user{{this_user.id}}">edit</a>
-        <a href="delete.html">Delete</a>
+        <a href="delete_user{{this_user.id}}">Delete</a>
+        <a href="/">Home</a>
 </body>
 </html>

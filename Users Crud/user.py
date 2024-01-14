@@ -39,17 +39,27 @@ class User:
         #instead of stating this in the server.py file we state it here since we logged data as a variable below
         results = connectToMySQL(cls.DB).query_db(query,data)
         return cls(results[0])
-
+    # hey
     @classmethod
-    def update(cls,data):
+    def updating_user(cls,data):
         query = """UPDATE users
             SET first_name = %(first_name)s,
                 last_name = %(last_name)s,
-                email = %(email)s,
-
-                WHERE  id = %(id)s;
-        """
+                email = %(email)s
+                WHERE  id = %(user_id)s;"""
+            #  the last statement before a where clause should never have a comma, s
+            # so the email input gets no comma at the end !!
         #instead of stating this in the server.py file we state it here since we logged data as a variable below
         results = connectToMySQL(cls.DB).query_db(query,data)
+        return results
+        
+
+
+    @classmethod
+    def delete_user(cls,id):
+        query = """Delete from users
+                WHERE  id = %(id)s;"""
+        #instead of stating this in the server.py file we state it here since we logged data as a variable below
+        results = connectToMySQL(cls.DB).query_db(query,{'id':id})
         return results
         

@@ -41,14 +41,20 @@ def show_user(user_id):
     return render_template('show.html', this_user = this_user)
 
 
-@app.route('/updating_user', methods = ['post'])
-def updating_user():
+@app.route('/updating_user<int:user_id>', methods = ['post'])
+def updating_user(user_id):
     data ={
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
+        'user_id': user_id
+        # #since we are tracking the user we  can just set it to whatever the id is without 
+        # saying request.from, this way 
+        # the database knows who to update 
     }
-    User.update(data)
+    User.updating_user(data)
+    # #here we connect out classmethods with 
+    # the appropriate name and function that will go in and update a user
 
     return redirect('/')
 
@@ -62,6 +68,11 @@ def update_user(user_id):
     
 
 #     return render_template('show.html', this_user = this_user)
+
+@app.route('/delete_user<int:user_id>')
+def delete_user(user_id):
+    User.delete_user(user_id)
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)

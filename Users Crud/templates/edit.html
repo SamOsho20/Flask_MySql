@@ -7,13 +7,16 @@
 </head>
 <body>
     <h1>Update user {{this_user.id}}</h1>
-    <form action="/updating_user" method="POST">
+    <form action="/updating_user{{this_user.id}}" method="POST">
         <label for="first_name">First Name</label>
-        <input type="text" name="first_name"/>
+        <input type="text" name="first_name" value="{{this_user.first_name}}"/>
+        <!-- # setting the value equal to its current input, will show us a page with the current 
+        value already filled in so the user can only change 
+        what they need to and leave the rest, so they don't have to retype their info -->
         <label for="last_name">Last Name</label>
-        <input type="text" name="last_name"/>
+        <input type="text" name="last_name" value="{{this_user.last_name}}"/>
         <label for="email">email</label>
-        <input type="text" name="email"/>
+        <input type="text" name="email" value="{{this_user.first_name}}"/>
         <a href="/">Home</a>
         <button>Submit</button>
     </form>
