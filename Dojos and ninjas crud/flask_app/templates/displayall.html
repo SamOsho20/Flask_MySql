@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All Dojos</h1>
+    <table>
+        <tr>
+            <TH>Dojo ID</TH>
+            <TH>Dojo name</TH>
+            <TH>Dojo location</TH>
+        </tr>
+        <tbody>
+            {% for dojos in all_dojos%}
+            <tr>
+                
+                    <td>{{dojos.id}}</td>
+                    <td>{{dojos.name}}</td>
+                    <td>{{dojos.location}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    <h2>New Dojo</h2>
+        <!-- <p>Add Dojo name</p>
+        <label for="name" name = 'name'><input type="text"></label> -->
+        <form action="process_dojo" method="post">
+        <p>Add a Dojo </p>
+        <label for="name"><input type="text"></label>
+        <button name = 'name'>Create Dojo </button>
+    </form>
+    <a href="addninja">Add A Ninja</a>
+</body>
+</html>

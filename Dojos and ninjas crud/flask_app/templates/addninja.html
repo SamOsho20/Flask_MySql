@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="add_ninja" method="post">
+        <input type="text" name="Full_name">
+        <input type="text" name="email">
+        <input type="number" name="age">
+        {% for dojos in all_dojos%}
+            <option value={{all_dojos.name}}></option>
+        {%endfor%}
+        <button>Add Ninja</button>
+        <P>{{all_dojos.name}}</P>
+    </form>
+</body>
+</html>
