@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All Users</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions </th>
+            </tr>
+            <tbody>
+                {% for user in all_users%}
+                <!-- #our for loops must go outside the tr to include all the data thats stored rather than just one -->
+                <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.created_at}}</td>
+                        <td>    
+                            <a href="show_user{{user.id}}">Show</a>
+                            <!-- #we must add in the jinja and user_id so that the page renders the proper id choosen -->
+                            <a href="update_user{{user.id}}">edit</a>
+                            <a href="delete_user{{user.id}}">Delete</a>
+                        </td>
+                        
+                </tr>
+                {%endfor%}
+            </tbody>
+            <a href="create_user">create user</a>
+            <!-- #we just need this link to take user to the url in our server.py that renders the create.html page -->
+        </table>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>user {{this_user.id}}</H1>
+    <!-- #our buttons will always redirect us to whatever 
+    the pages redirect route is in the server.py -->
+    <table>
+        
+            <tr>
+                <th>Full Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Created on</th>
+                <th>Last Updated On</th>
+            </tr>
+            <tr>
+                <Td>{{this_user.first_name}}</Td>
+                <Td>{{this_user.last_name}}</Td>
+                <Td>{{this_user.email}}</Td>
+                <Td>{{this_user.created_at}}</Td>
+                <Td>{{this_user.updated_at}}</Td>
+            </tr>
+        </table>
+        <a href="update_user{{this_user.id}}">edit</a>
+        <a href="delete_user{{this_user.id}}">Delete</a>
+        <a href="/">Home</a>
+</body>
+</html>
