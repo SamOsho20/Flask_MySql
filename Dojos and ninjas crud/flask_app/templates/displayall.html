@@ -18,10 +18,14 @@
             <tr>
                 
                     <td>{{dojos.id}}</td>
-                    <td>{{dojos.name}}</td>
+                    <td>
+                        <a href="show_dojo{{dojos.id}}">
+                        {{dojos.name}}</a>
+                    </td>
                     <td>{{dojos.location}}</td>
             </tr>
             {%endfor%}
+
         </tbody>
     </table>
 
@@ -30,8 +34,10 @@
         <label for="name" name = 'name'><input type="text"></label> -->
         <form action="process_dojo" method="post">
         <p>Add a Dojo </p>
-        <label for="name"><input type="text"></label>
-        <button name = 'name'>Create Dojo </button>
+        <input type="text" name = 'name'></label>
+        <!-- #always have name in the feild/element that carrys the value you want to store 
+        so name goes on same line as input, name goes on same line as select tag and etc -->
+        <button>Create Dojo </button>
     </form>
     <a href="addninja">Add A Ninja</a>
 </body>

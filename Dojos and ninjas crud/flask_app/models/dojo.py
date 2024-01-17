@@ -30,13 +30,19 @@ class Dojo:
 
     @classmethod
     def get_dojos_with_ninjas(cls, data ):
-        query = "SELECT * FROM dojos LEFT JOIN ninjas ON ninjas.dojo_id = dojo.id WHERE dojo.id = %(id)s;"
+        # query = "SELECT * FROM dojos LEFT JOIN ninjas ON ninjas.dojo_id = dojo.id WHERE dojo.id = %(id)s;"
+        query = "SELECT * FROM dojos JOIN ninjas ON ninjas.dojo_id = dojos.id WHERE dojos.id = %(id)s;"
+
+        #left join will grab everything regrdless of a relationship  a relationship 
+            # -(so it will get all ninjas regradless if theres a dojo or not  )
+        #Regular join will grab everthing where there is only a relationshio 
+            # so it would only grab the ninjas assscoiated to the boston, indiana dojo or etc
         results = connectToMySQL(cls.DB).query_db(query, data )
         # results will be a list of topping objects with the ninjas attached to each row. 
         dojo = cls(results[0])
         for row_from_db in results:
             # Now we parse the burger data to make instances of burgers and add them into our list.
-            dojo_data = {
+            ninja_data = {
                 "id": row_from_db["ninjas.id"],
                 "name": row_from_db["ninjas.name"],
                 "full_name": row_from_db["full_name"],
@@ -45,7 +51,7 @@ class Dojo:
                 "created_at": row_from_db[".created_at"],
                 "updated_at": row_from_db["dojos.updated_at"]
             }
-            Dojo.ninjas.append(ninja.Ninja(dojo_data))
+            dojo.ninjas.append(ninja.Ninja(ninja_data))
             #here we are saying our ninjas instance above is going to be combined with our Ninja instances from the ninja
             # file and then well return that entire list of its contents
         return Dojo

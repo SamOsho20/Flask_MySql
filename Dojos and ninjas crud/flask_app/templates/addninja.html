@@ -6,13 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="add_ninja" method="post">
-        <input type="text" name="Full_name">
-        <input type="text" name="email">
-        <input type="number" name="age">
+    <form action="/add_ninja" method="post">
+        <!-- # always add / slash before form name!! -->
+        <p>Full Name<input type="text" name="full_name"></p>
+        <p>email<input type="text" name="email"></p>
+        <p>age<input type="number" name="age"></p>
+        <p>Your Dojo<select name="dojo_id">
+        <!-- # for option values they always need select tags before it -->
         {% for dojos in all_dojos%}
-            <option value={{all_dojos.name}}></option>
+            <option value={{dojos.id}}>{{dojos.name}}</option>
         {%endfor%}
+        </select></p>
         <button>Add Ninja</button>
         <P>{{all_dojos.name}}</P>
     </form>
