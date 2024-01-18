@@ -6,13 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="show_dojo{{dojos.id}}">
-        <h1>{{dojos_info.name}}</h1>
+        <h1>{{dojo_info.name}}</h1>
         {%for ninja in dojo_info.ninjas%}
             <h1>{{ninja.full_name}}</h1>
             <h1>{{ninja.email}}</h1>
             <h1>{{ninja.age}}</h1>
         {%endfor%}
-    </form>
 </body>
 </html>
