@@ -6,6 +6,34 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>All Authors</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                
+            </tr>
+        </thead>
+   
+        <tbody>
+            {%for authors in author_information %}
+                <tr>
+                <td>{{authors.id}}</td>
+                <td>{{authors.name}}</td>
+                <td>{{authors.created_at}}</td>
+                <td>{{authors.updated_at}}</td>
+            {%endfor%}
+        </tr>
+        </tbody>
+    </table>
+
+    <form action="add_author" method="post">
+        <input type="text" name="name"> 
+        <button>Create</button>
+    </form>
     
 </body>
 </html>
