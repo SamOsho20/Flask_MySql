@@ -22,7 +22,9 @@
             {%for authors in author_information %}
                 <tr>
                 <td>{{authors.id}}</td>
-                <td>{{authors.name}}</td>
+                <td>
+                    <a href="/show_author{{authors.id}}">{{authors.name}}</a>
+                </td>
                 <td>{{authors.created_at}}</td>
                 <td>{{authors.updated_at}}</td>
             {%endfor%}

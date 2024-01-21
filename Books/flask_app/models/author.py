@@ -1,4 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import book
 class Author:
     DB = "booksandauthors_schema"
     def __init__(self,data):
@@ -6,6 +7,8 @@ class Author:
         self.name = data ['name']
         self.created_at = data ["created_at"]
         self.updated_at = data['updated_at']
+        self.our_author = []
+        self.this_book= []
 
 
         #QUERY TO DISPLAY ALL AUTHORS 
@@ -27,5 +30,49 @@ class Author:
         query = 'INSERT INTO authors (name, created_at, updated_at) values (%(name)s, NOW(),NOW());'
         results = connectToMySQL(cls.DB).query_db(query, data)
         return results
+    
+    @classmethod
+    def get_authors_with_books(cls,data):
+        query = """SELECT * from authors 
+                    join favorites on favorites.author_id = authors.id
+                    join books on favorites.book_id = books.id 
+                    Where authors.id = %(id)s"""
+        results = connectToMySQL(cls.DB).query_db(query,data)
+        author = cls(results[0])
+        for row_from_db in results:
+            book_data = {
+                'id' : row_from_db["books.id"],
+                'title': row_from_db['title'],
+                'pages' : row_from_db['pages'],
+                'created_at': row_from_db['books.created_at'],
+                'updated_at' : row_from_db ['books.updated_at']
+            }
+            author.this_book.append(book.Book(book_data))
+
+
+    @classmethod
+    def get_one_author(cls,data):
+        query  =  """SELECT *  from authors
+                    WHERE id = %(id)s;"""
+        results = connectToMySQL(cls.DB).query_db(query,data)
+        author_is = cls(results[0])
+        # return cls(results[0])
+        for row_from_db in results:
+            # Now we parse the ninja data to make instances of ninjas and add them into our list.
+            print(row_from_db)
+            author_data = {
+                "id": row_from_db["id"],
+                #your table name needs to be put in front of any column names that are in both tables  
+                # bc you have 2 id columns in both tables you need to specify 
+                # what tables id you want so the db dosent get confused
+                "name": row_from_db["name"],
+
+                "created_at": row_from_db["created_at"],
+                "updated_at": row_from_db["updated_at"]
+            }
+
+        author_is.our_author.append(author_data)
+        return author_is
 
     
+
