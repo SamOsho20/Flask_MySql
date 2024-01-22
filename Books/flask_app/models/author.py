@@ -9,7 +9,9 @@ class Author:
         self.updated_at = data['updated_at']
         self.our_author = []
         self.this_book= []
-
+        #make sure to not add commas at teh end of each instance like this 
+            #self.id = data['id'],
+            #self.name = data ['name'],
 
         #QUERY TO DISPLAY ALL AUTHORS 
 
@@ -33,21 +35,26 @@ class Author:
     
     @classmethod
     def get_authors_with_books(cls,data):
-        query = """SELECT * from authors 
-                    join favorites on favorites.author_id = authors.id
-                    join books on favorites.book_id = books.id 
-                    Where authors.id = %(id)s"""
+        query = """SELECT * FROM authors
+                    join favorites on authors.id = favorites.author_id
+                    join books on books.id = favorites.book_id
+                    where authors.id = %(id)s"""
         results = connectToMySQL(cls.DB).query_db(query,data)
         author = cls(results[0])
         for row_from_db in results:
             book_data = {
-                'id' : row_from_db["books.id"],
+                'id' : row_from_db['books.id'],
                 'title': row_from_db['title'],
                 'pages' : row_from_db['pages'],
                 'created_at': row_from_db['books.created_at'],
                 'updated_at' : row_from_db ['books.updated_at']
             }
             author.this_book.append(book.Book(book_data))
+            # here we are saying the that in our the result from author line 41
+            # , we will go into the empty list and add all this info
+            # but make sure this info matches up to our BOOk class and the atributes we stored there!
+        
+        return author
 
 
     @classmethod
@@ -71,7 +78,8 @@ class Author:
                 "updated_at": row_from_db["updated_at"]
             }
 
-        author_is.our_author.append(author_data)
+            author_is.our_author.append(author_data)
+        
         return author_is
 
     

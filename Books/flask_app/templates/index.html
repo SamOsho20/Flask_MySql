@@ -23,7 +23,9 @@
                 <tr>
                 <td>{{authors.id}}</td>
                 <td>
-                    <a href="/show_author{{authors.id}}">{{authors.name}}</a>
+                    <a href="/show_author/{{authors.id}}">{{authors.name}}</a>
+                    <!-- #make sure u add 2nd slash before numbers evn though it 
+                    wok for you without 2nd slash add it because its proper formatting -->
                 </td>
                 <td>{{authors.created_at}}</td>
                 <td>{{authors.updated_at}}</td>
@@ -33,7 +35,7 @@
     </table>
 
     <form action="add_author" method="post">
-        <input type="text" name="name"> 
+    <input type="text" name="name"> 
         <button>Create</button>
     </form>
     

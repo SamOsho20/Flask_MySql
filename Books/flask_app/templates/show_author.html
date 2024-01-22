@@ -7,8 +7,34 @@
 </head>
 <body>
         {% for author in this_author.our_author%}
-            <p>This is {{author.name}}</p>
+            <h1>This is {{author.name}}</h1>
         {%endfor%}
-    </form>
+        <table>
+            <tr>
+                <th>Title</td>
+                <th># of pages</td>
+            </tr>
+            <tbody>
+                {%for favorites in authors_fav.this_book%}
+                <tr>
+                    <td>{{favorites.title}}</td>
+                    <td>{{favorites.pages}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <form action="/add_authors_fav" method="post">
+            <input type="hidden" name="author_id" value="{{this_author.id}}">
+            <!-- #hiding this input so teh user doesnt see it and ogging it in data 
+            so we can know what user favorited what  -->
+            <p>Add Authors Favorites <select name="book_id">
+                <!-- # for option values they always need select tags before it -->
+                {% for book in all_books%}
+                    <option value={{book.id}}>{{book.title}}</option>
+                {%endfor%}
+            </select></p>
+            <input type="submit" name="submit" value="submit">
+        </form>
+        <a href="/">home</a>
 </body>
 </html>
