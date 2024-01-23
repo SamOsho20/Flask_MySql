@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All Books</h1>
+    {% for book in all_books%}
+    <a>
+        <p><a href="show_book/{{book.id}}">{{book.title}}</a></p>
+    {%endfor%}
+
+    <h2>New Books</h2>
+    <form action="add_new_book" method="post">
+        <p>Book Name<input type="text" name="title"></p>
+        <p># Of pages<input type="number" name="num_of_pages"></p>
+        <button>submit</button>
+    </form>
+    <a href="/">Home</a>
+</body>
+</html>

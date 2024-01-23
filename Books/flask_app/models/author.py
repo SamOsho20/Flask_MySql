@@ -36,8 +36,8 @@ class Author:
     @classmethod
     def get_authors_with_books(cls,data):
         query = """SELECT * FROM authors
-                    join favorites on authors.id = favorites.author_id
-                    join books on books.id = favorites.book_id
+                    left join favorites on authors.id = favorites.author_id
+                    left join books on books.id = favorites.book_id
                     where authors.id = %(id)s"""
         results = connectToMySQL(cls.DB).query_db(query,data)
         author = cls(results[0])
@@ -84,3 +84,9 @@ class Author:
 
     
 
+    @classmethod
+    def add_favorite_book(cls,data):
+        query  =  "INSERT INTO favorites (book_id,author_id) values (%(book_id)s, %(author_id)s);"
+        #make sure to add add last parentheses at the end then semicolon and last quotations
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return results

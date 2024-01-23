@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/process" method="POST">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name"/>
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name"/>
+        <label for="email">email</label>
+        <input type="text" name="email"/>
+        <button>Add User</button>
+        <!-- # when the button is clicked 
+        it'll  take in all the info stored into the form  -->
+
+    </form>
+    {% with messages = get_flashed_messages(category_filter = ['f_name']) %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            {% for message in messages %}            <!-- loop through the messages -->
+                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

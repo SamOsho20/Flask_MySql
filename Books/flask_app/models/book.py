@@ -1,5 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import author
+#import files not classes here!!
 class Book:
     DB = "booksandauthors_schema"
     def __init__(self,data):
@@ -13,9 +14,11 @@ class Book:
     @classmethod
     def get_books_with_authors(cls,data):
         query = """SELECT * FROM books
-                    join favorites on books.id = favorites.book_id
-                    join authors on authors.id = favorites.author_id
+                    left join favorites on books.id = favorites.book_id
+                    left join authors on authors.id = favorites.author_id
                     where books.id =%(id)s"""
+                    # the left join here will give us a value of none when we render the template, 
+                    # rather than a n arror saying taht nothing is in the index of 0 tuplex
         results = connectToMySQL(cls.DB).query_db(query,data)
         book_is = cls(results[0])
         for row_from_db in results:
@@ -33,7 +36,7 @@ class Book:
     
     @classmethod
     def get_all_books(cls):
-        query  =  "SELECT *  from books;"
+        query  =  "SELECT * from books;"
         results = connectToMySQL(cls.DB).query_db(query)
         book_info = []
         # print(results)
@@ -44,8 +47,19 @@ class Book:
         return book_info
     
     @classmethod
+    def get_one_book(cls, book_id):
+        query  =  "SELECT * from books where id = %(id)s;"
+        results = connectToMySQL(cls.DB).query_db(query,book_id)
+        return cls(results[0])
+    @classmethod
     def add_new_favorite(cls,data):
         query  =  "INSERT INTO favorites (book_id,author_id) values (%(book_id)s, %(author_id)s);"
         #make sure to add add last parentheses at the end then semicolon and last quotations
         results = connectToMySQL(cls.DB).query_db(query, data)
+        return results
+    
+    @classmethod
+    def add_new_book(cls,data):
+        query  =  "INSERT INTO books (title,pages) values (%(title)s, %(pages)s);"
+        results = connectToMySQL(cls.DB).query_db(query,data)
         return results

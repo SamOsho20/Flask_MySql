@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Book Title:{{one_book.title}}</h1>
+        {%for author in author_is.this_author%}
+            <p>Favorited by {{author.name}}</p>
+        {%endfor%}
+
+    <form action="/add_books_favoriters" method="post">
+            <input type="hidden" name="book_id" value="{{one_book.id}}">
+            <!-- #hiding this input so teh user doesnt see it and ogging it in data 
+            so we can know what user favorited what  -->
+            <p>Add Books Favorites <select name="author_id">
+                <!-- # for option values they always need select tags before it -->
+                {% for author in all_authors%}
+                    <option value={{author.id}}>{{author.name}}</option>
+                {%endfor%}
+            </select></p>
+            <input type="submit" name="submit" value="submit">
+        </form>
+        <a href="/">home</a>
+        <a href="/all_books">Books Home</a>
+</body>
+</html>
