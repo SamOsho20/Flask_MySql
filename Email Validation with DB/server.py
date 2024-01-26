@@ -28,6 +28,16 @@ def create_user():
     # we then redirect back to our home page
         return redirect('/')
     
+
+    # if User.validate_user(request.form):
+    #     data ={
+    #     "first_name": request.form['first_name'],
+    #     "last_name": request.form['last_name'],
+    #     "email": request.form['email'],
+    #     }
+    #     User.save(data)
+    # # we then redirect back to our home page
+    #     return redirect('/')
     return redirect ('/create_user')
     
 

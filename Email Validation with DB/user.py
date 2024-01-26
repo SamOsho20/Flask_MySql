@@ -1,6 +1,8 @@
 from mysqlconnection import connectToMySQL
 from flask import flash
 import re
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
+
 #we must import re for validation of email!
 #we must import flash to use it 
 
@@ -58,7 +60,7 @@ class User:
             print(is_valid)
 
         #validation for last  name 
-        if not request['last_name'] :
+        if not request['last_name']:
             is_valid = False
             flash("please provide a last name", "f_name")
             #so if the user inputs nothing we flash message above 
@@ -70,4 +72,13 @@ class User:
             #??? for some reason when i enter lengths for first name and last name less tan 2 only 
             # get a response saying the last name needs to be longer
             print(is_valid)
-            return is_valid
+
+        if not request['email']:
+            is_valid = False
+            flash ('please enter an email', 'f_name')
+            #if theres no email input well have nothing to validate so this message is needed 
+        elif not EMAIL_REGEX.match(request['email']):
+            #so if our email input doesnt match the regex format above this will be false and get teh flash message
+            flash("invalid email address, please try again", 'f_name')
+            is_valid = False
+        return is_valid
