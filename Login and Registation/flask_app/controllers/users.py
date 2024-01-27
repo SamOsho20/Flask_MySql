@@ -1,5 +1,6 @@
 from flask_app import app
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, flash
+#to use flash directly in this file we must import it like line 3
 from flask_app.models.user  import User
 from flask_bcrypt import Bcrypt        
 bcrypt = Bcrypt(app)
@@ -14,16 +15,24 @@ def show_loginandreg():
 def process_reg():
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
     print(pw_hash)
+    user_in_db = User.get_by_email({'user_email': request.form['email']})
+    if user_in_db:
+            flash('email already exists', 'reg_flash')
+            return redirect ('/')
+    #this will prevent users with an exsiting email registering twice!
     if User.validate_registration(request.form):
         data = {
             'first_name' : request.form['first_name'],
             'last_name' : request.form['last_name'],
             'email' : request.form['email'],
+            'age': request.form ['age'],
             'password': pw_hash
-            #confrim password should not be added as column as database
+            #confirm password should not be added as column as database
             }
-        User.create_user(data)
-        #save the data t a method
+        
+        # User.create_user(data)
+        # if we dont comment  line 33 out it will run the query 2x!!
+        #save the data to a method
         user_id = User.create_user(data)
 
         session['user_id'] = user_id
@@ -32,8 +41,6 @@ def process_reg():
         #see  dashboard route to see how user_id gets forwarded
 
         return redirect (f"/dashboard/{session['user_id']}")
-    if not pw_hash:
-        return redirect ('/')
 
     return redirect('/')
 
@@ -44,6 +51,11 @@ def show_user(user_id):
     if session['user_id']:
         current_user = User.get_one_user({'user_id': session['user_id']})
         return render_template ('dashboard.html', current_user = current_user)
+    return redirect ('/')
+    #!!!! line 48 is very important!! so line 45 says if a user is in session 
+    # basicalaly if we have a user logged in show him the dashboard BUT if a user is not in session/logged in
+    #  send him to the login and reg. This allows
+    #users not logged in should not be able to use our app so this sequence should be added on any crud methods using session
     
 @app.route('/logout')
 def logout():
@@ -52,6 +64,14 @@ def logout():
 
 @app.route('/login', methods = ['POST'])
 def login():
+    user_in_db = User.get_by_email({'user_email': request.form['login_email']})
+    if user_in_db:
+        #if line 62 this is true it will go through all the way to line 65
+        if  bcrypt.check_password_hash(user_in_db.password, request.form['password']):
+            session ['user_id'] = user_in_db.id
+            return redirect (f"/dashboard/{session['user_id']}")
+    #if false line 67 and 68 will be executed 
+    flash('invalid credentials', 'login')
     return redirect ('/')
 
     #  'bool' object is not subscriptable error 
