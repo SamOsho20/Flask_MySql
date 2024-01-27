@@ -19,7 +19,7 @@
     },
     "database": "MySQL",
     "databaseName": "",
-    "canvasType": "ERD",
+    "canvasType": "@vuerd/builtin-sql-ddl",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -236,7 +236,7 @@
           "active": true,
           "left": 434.3333,
           "top": 655,
-          "zIndex": 49,
+          "zIndex": 50,
           "widthName": 60,
           "widthComment": 60
         },
