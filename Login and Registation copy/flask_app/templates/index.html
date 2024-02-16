@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Register Here </h1>
+    <form action="/register_user" method="post">
+        <label for="first_name">Enter Your First Name</label>
+        <input type="text" name="first_name"><BR>
+        <!-- #using label we can enter a header for our forms  -->
+
+        <label for="last_name">Enter Your Last name</label>
+        <input type="text" name="last_name"><BR>
+
+        <label for="email">Enter Your Email</label>
+        <input type="text" name="email"><BR>
+
+        <label for="age">Enter Your Age</label>
+        <input type="number" name="age"><br>
+
+        <label for="password">Enter a Secure password</label>
+        <input type="password" name="password"><BR>
+        <!-- #always set input type for password to password -->
+
+        <label for="confirm_password">Confirm Your password</label>
+        <input type="password" name="confirm_password"><BR>
+
+        <button>Register</button>
+    </form>
+
+    {% with messages = get_flashed_messages(category_filter = ['reg_flash']) %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            {% for message in messages %}            <!-- loop through the messages -->
+                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+            {% endfor %}
+        {% endif %}
+    {% endwith %}   
+    
+    <form action="/login" method="POST">
+        <h2>Login Here</h2>
+        <Label for ="login_email">Email</Label>
+        <input type="text" name="login_email"><br>
+
+        <label for="password">password</label>
+        <input type="password" name="password">
+        <button>Login</button>
+    </form>
+    {% with messages = get_flashed_messages(category_filter = ['login']) %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            {% for message in messages %}            <!-- loop through the messages -->
+                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to your NETFLIX, {{current_user.first_name}}</h1>
+        <a href="/logout">logout</a><BR>
+        <a href="/create_show">+Create</a><BR>
+    
+    <h2>All TV Shows:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Network</th>
+                <th>Release Date</th>
+                <th>More</th>
+            </tr>
+        </thead>
+        {%for show in all_shows%}
+        <tbody>
+            <tr>
+                <td>
+                <a href="/display_show/{{show.id}}">{{show.title}}</a></td>
+                <td>{{show.network}}</td>
+                <td>{{show.release_date}}</td>
+                <td>{{show.user_id}}</td>
+                <td>
+                        {% if current_user.id == show.user_id %}
+                            <a href="/edit/{{show.id}}">Edit</a>
+                            <a href="/delete/{{show.id}}">Delete</a>
+                        {% endif%}
+                    <a href="/display_show/{{show.id}}">Details</a>
+                </td>
+            </tr>
+        </tbody>
+        {%endfor%}
+    </table>
+
+
+
+</body>
+</html>

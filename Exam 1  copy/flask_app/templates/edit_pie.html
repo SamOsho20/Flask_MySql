@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H2>Edit your {{this_pie.name}} pie</H2>
+    <form action="/process_my_pie/{{this_pie.id}}" method="post">
+            <label for="Name">Name</label>
+            <input type="text" value ="{{this_pie.name}}"name="name"><br>
+            <!-- #in order to get a placeholder value in the input box 
+            we need to its table and name with jinja syntax  -->
+    
+            <label for="ingredients">Ingredients</label>
+            <input type="text"  value ="{{this_pie.ingredients}}" name="ingredients"> <br>
+    
+            <label for="size">Size</label>
+            <input type="text" value = "{{this_pie.size}}" name="size"><br>
+            <button>Submit</button>
+        </form>
+    
+        {% with messages = get_flashed_messages(category_filter = ['update_pie_flash']) %}    
+            {% if messages %}                            
+                {% for message in messages %}            
+                    <p>{{message}}</p>                  
+                {% endfor %}
+            {% endif %}
+        {% endwith %}   
+    
+    </form>
+    <a href="/logout">logout</a><BR>
+    <a href="/dashboard">Back To my Pies</a>
+</body>
+</html>

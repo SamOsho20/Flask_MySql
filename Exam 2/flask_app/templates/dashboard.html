@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/dashboard">
+        <h1>Welcome These are your current Pies</h1>
+        <p>{{current_user.first_name}}</p>
+        <a href="/logout">logout</a><BR>
+        <a href="/show_all_pies.html">Go to All Pies</a>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+
+
+    <form action="/process_pie" method="Post">
+        <H2>Create a New Pie</H2>
+        <label for="Name">Name</label>
+        <input type="text" name="name"><br>
+
+        <label for="ingredients">Ingredients</label>
+        <input type="text" name="ingredients"><br>
+
+        <label for="size">Size</label>
+        <input type="text" name="size"><br>
+        <button>Submit</button>
+    </form>
+
+    {% with messages = get_flashed_messages(category_filter = ['new_pie_flash']) %}    
+        {% if messages %}                            
+            {% for message in messages %}            
+                <p>{{message}}</p>                  
+            {% endfor %}
+        {% endif %}
+    {% endwith %}   
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="getall_pies">
+        <h1>All Pies</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Owner</th>
+            </tr>
+            <tbody>
+                {% for pie in all_pies%}
+                <tr>
+                    <td>
+                        <a href="/show_pie/{{pie.id}}">{{pie.name}}</a>
+                    </td>
+                    <td>{{pie.creator.first_name}}</td>
+                </tr>
+            </tbody>
+            {%endfor%}
+        </table>
+    </form>
+    <a href="/logout">logout</a><BR>
+    <a href="/dashboard">Back To my Pies</a>
+    
+</body>
+</html>

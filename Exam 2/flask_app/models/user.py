@@ -1,10 +1,11 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
+from flask_app.models import pie
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 class User:
-    DB = 'loginandreg_schema'
+    DB = 'userandpie_schema'
     def __init__(self,data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -13,17 +14,34 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.age = data['age']
-
+        self.this_pie = []
+        self.gathered_pies = None
 
     @classmethod
     def create_user(cls,data):
-        query = """INSERT INTO USER
-                    (first_name,last_name,email,password,age,created_at,updated_at) 
-                    VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s,%(age)s,NOW(),NOW());
+        query = """INSERT INTO USERS
+                    (first_name,last_name,email,password,created_at,updated_at) 
+                    VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s,NOW(),NOW());
                     """
         results = connectToMySQL(cls.DB).query_db(query,data)
         return results
+
+    
+
+    @classmethod
+    def get_by_email(cls,user_email):
+        query = """SELECT * FROM USERS
+                    Where email = %(user_email)s;
+                    """
+                    #make sure names match up for id like above on lines 29,31, "user_id"
+        results = connectToMySQL(cls.DB).query_db(query,user_email)
+        if len(results) < 1:
+            return False
+            # so if the list returned to us by this query has nothing in it it means that
+            #  email is not in the database and it will return false ciinnecting to line.. in our controllers 
+            # but if the list retuned does return back an list we knwo the email is 
+            # correct and we can save all its data in the results to be used 
+        return cls(results[0])
     
     @classmethod
     def get_one_user(cls,user_id):
@@ -32,23 +50,7 @@ class User:
                     """
                     #make sure names match up for id like above on lines 29,31, "user_id"
         results = connectToMySQL(cls.DB).query_db(query,user_id)
-        return cls(results[0])
-    
-    @classmethod
-    def get_by_email(cls,user_email):
-        query = """SELECT * FROM USER
-                    Where email = %(user_email)s;
-                    """
-                    #make sure names match up for id like above on lines 29,31, "user_id"
-        results = connectToMySQL(cls.DB).query_db(query,user_email)
-        if len (results) < 1:
-            return False
-            # so if the list returned to us by this query has nothing in it it means that
-            #  email is not in the database and it will return false ciinnecting to line.. in our controllers 
-            # but if the list retuned does return back an list we knwo the email is 
-            # correct and we can save all its data in the results to be used 
-        return cls(results[0])
-    
+        return results
 
     #  'bool' object is not subscriptable error 
     # return cls(results[0])
@@ -89,13 +91,6 @@ class User:
         elif len(request["password"])< 8:
             is_valid = False
             flash('Password Must Be over 8 characters', 'reg_flash')
-
-        if not request['age']:
-            flash('Enter An Age' 'reg_flash')
-
-        elif int(request['age']) < 18:
-            flash('You must be older than 18 to register', 'reg_flash')
-            #we must log the request data for age as an int!!
 
         
         if request['password'] != request['confirm_password']:
